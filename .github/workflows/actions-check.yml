@@ -1,0 +1,24 @@
+name: Verify GitHub Actions
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/actions-check.yml'
+
+permissions: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify runner execution and Docker availability
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'GitHub Actions runner is working.'
+          date -u
+          uname -m
+          docker version
+          echo 'Verification passed.' >> "$GITHUB_STEP_SUMMARY"
